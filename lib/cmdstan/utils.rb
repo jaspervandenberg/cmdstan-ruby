@@ -30,11 +30,22 @@ module CmdStan
     end
 
     def extension
-      windows? ? ".exe" : ""
+      case
+      when windows?
+        '.exe'
+      when openbsd?
+        '.stan'
+      else
+        ''
+      end
     end
 
     def mac?
       RbConfig::CONFIG["host_os"] =~ /darwin/i
+    end
+    
+    def openbsd?
+      RbConfig::CONFIG["host_os"] =~ /openbsd/i
     end
 
     def windows?
